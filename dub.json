@@ -1,0 +1,9 @@
+{
+    "name": "mepcache",
+    "description": "Hello World - A minimal DUB bundle.",
+    "dependencies": {
+    },
+    	"libs-posix": [
+		"libmemcached"
+	]
+}

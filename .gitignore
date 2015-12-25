@@ -1,0 +1,6 @@
+/.project
+/*.sln
+/*.visualdproj
+/.dub
+/dub.selections.json
+/*.suo
