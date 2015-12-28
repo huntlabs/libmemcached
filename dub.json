@@ -1,6 +1,6 @@
 {
-    "name": "mepcache",
-    "description": "Hello World - A minimal DUB bundle.",
+    "name": "collie-memcachde4d",
+    "description": "memcached extern(C) client for D",
     "dependencies": {
     },
     	"libs-posix": [
