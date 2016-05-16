@@ -1,6 +1,10 @@
 {
     "name": "collie-memcachde4d",
     "description": "memcached extern(C) client for D",
+	"homepage": "http://collied.org/" ,
+    "copyright": "Copyright © 2016, putao.com",
+    "authors": ["putao.com Dlang team."],
+    "license": "BSD" ,
 	"targetType": "library",
     "dependencies": {
     },
