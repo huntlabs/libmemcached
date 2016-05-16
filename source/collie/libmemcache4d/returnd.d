@@ -40,50 +40,44 @@ import collie.libmemcache4d.structd;
 import collie.libmemcache4d.types;
 import collie.libmemcache4d.configure;
 
-extern (C) :
+extern (C):
 nothrow:
 
-static  bool memcached_success(memcached_return_t rc)
+static bool memcached_success(memcached_return_t rc)
 {
-  return (rc == memcached_return_t.MEMCACHED_BUFFERED ||
-          rc == memcached_return_t.MEMCACHED_DELETED ||
-          rc == memcached_return_t.MEMCACHED_END || 
-          rc == memcached_return_t.MEMCACHED_ITEM || 
-          rc == memcached_return_t.MEMCACHED_STAT || 
-          rc == memcached_return_t.MEMCACHED_STORED || 
-          rc == memcached_return_t.MEMCACHED_SUCCESS || 
-          rc == memcached_return_t.MEMCACHED_VALUE);
+    return (rc == memcached_return_t.MEMCACHED_BUFFERED
+        || rc == memcached_return_t.MEMCACHED_DELETED
+        || rc == memcached_return_t.MEMCACHED_END
+        || rc == memcached_return_t.MEMCACHED_ITEM
+        || rc == memcached_return_t.MEMCACHED_STAT
+        || rc == memcached_return_t.MEMCACHED_STORED
+        || rc == memcached_return_t.MEMCACHED_SUCCESS || rc == memcached_return_t.MEMCACHED_VALUE);
 }
 
-static  bool memcached_failed(memcached_return_t rc)
+static bool memcached_failed(memcached_return_t rc)
 {
-  return (rc != memcached_return_t.MEMCACHED_SUCCESS && 
-          rc != memcached_return_t.MEMCACHED_END && 
-          rc != memcached_return_t.MEMCACHED_STORED && 
-          rc != memcached_return_t.MEMCACHED_STAT && 
-          rc != memcached_return_t.MEMCACHED_DELETED &&
-          rc != memcached_return_t.MEMCACHED_BUFFERED &&
-          rc != memcached_return_t.MEMCACHED_VALUE);
+    return (rc != memcached_return_t.MEMCACHED_SUCCESS
+        && rc != memcached_return_t.MEMCACHED_END
+        && rc != memcached_return_t.MEMCACHED_STORED
+        && rc != memcached_return_t.MEMCACHED_STAT
+        && rc != memcached_return_t.MEMCACHED_DELETED
+        && rc != memcached_return_t.MEMCACHED_BUFFERED && rc != memcached_return_t.MEMCACHED_VALUE);
 }
 
-static  bool memcached_fatal(memcached_return_t rc)
+static bool memcached_fatal(memcached_return_t rc)
 {
-  return (
-          rc != memcached_return_t.MEMCACHED_BUFFERED &&
-          rc != memcached_return_t.MEMCACHED_CLIENT_ERROR &&
-          rc != memcached_return_t.MEMCACHED_DATA_EXISTS &&
-          rc != memcached_return_t.MEMCACHED_DELETED &&
-          rc != memcached_return_t.MEMCACHED_E2BIG && 
-          rc != memcached_return_t.MEMCACHED_END && 
-          rc != memcached_return_t.MEMCACHED_ITEM &&
-          rc != memcached_return_t.MEMCACHED_ERROR &&
-          rc != memcached_return_t.MEMCACHED_NOTFOUND && 
-          rc != memcached_return_t.MEMCACHED_NOTSTORED && 
-          rc != memcached_return_t.MEMCACHED_SERVER_MEMORY_ALLOCATION_FAILURE && 
-          rc != memcached_return_t.MEMCACHED_STAT && 
-          rc != memcached_return_t.MEMCACHED_STORED && 
-          rc != memcached_return_t.MEMCACHED_SUCCESS && 
-          rc != memcached_return_t.MEMCACHED_VALUE);
+    return (rc != memcached_return_t.MEMCACHED_BUFFERED
+        && rc != memcached_return_t.MEMCACHED_CLIENT_ERROR
+        && rc != memcached_return_t.MEMCACHED_DATA_EXISTS
+        && rc != memcached_return_t.MEMCACHED_DELETED
+        && rc != memcached_return_t.MEMCACHED_E2BIG
+        && rc != memcached_return_t.MEMCACHED_END
+        && rc != memcached_return_t.MEMCACHED_ITEM
+        && rc != memcached_return_t.MEMCACHED_ERROR
+        && rc != memcached_return_t.MEMCACHED_NOTFOUND
+        && rc != memcached_return_t.MEMCACHED_NOTSTORED
+        && rc != memcached_return_t.MEMCACHED_SERVER_MEMORY_ALLOCATION_FAILURE
+        && rc != memcached_return_t.MEMCACHED_STAT
+        && rc != memcached_return_t.MEMCACHED_STORED
+        && rc != memcached_return_t.MEMCACHED_SUCCESS && rc != memcached_return_t.MEMCACHED_VALUE);
 }
-
-

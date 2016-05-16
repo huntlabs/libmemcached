@@ -43,58 +43,43 @@ public import collie.libmemcache4d.functiond;
 public import collie.libmemcache4d.server;
 public import collie.libmemcache4d.returnd;
 
-
-extern (C) :
+extern (C):
 nothrow:
 
+void memcached_servers_reset(memcached_st* ptr);
 
-void memcached_servers_reset(memcached_st *ptr);
+memcached_st* memcached_create(memcached_st* ptr);
 
+memcached_st* memcached(const char* string, size_t string_length);
 
-memcached_st *memcached_create(memcached_st *ptr);
+void memcached_free(memcached_st* ptr);
 
+memcached_return_t memcached_reset(memcached_st* ptr);
 
-memcached_st *memcached(const char *string, size_t string_length);
+void memcached_reset_last_disconnected_server(memcached_st* ptr);
 
+memcached_st* memcached_clone(memcached_st* clone, const memcached_st* ptr);
 
-void memcached_free(memcached_st *ptr);
+void* memcached_get_user_data(const memcached_st* ptr);
 
+void* memcached_set_user_data(memcached_st* ptr, void* data);
 
-memcached_return_t memcached_reset(memcached_st *ptr);
+memcached_return_t memcached_push(memcached_st* destination, const memcached_st* source);
 
+memcached_instance_st* memcached_server_instance_by_position(const memcached_st* ptr,
+    uint server_key);
 
-void memcached_reset_last_disconnected_server(memcached_st *ptr);
+uint memcached_server_count(const memcached_st*);
 
-
-memcached_st *memcached_clone(memcached_st *clone, const memcached_st *ptr);
-
-
-void *memcached_get_user_data(const memcached_st *ptr);
-
-
-void *memcached_set_user_data(memcached_st *ptr, void *data);
-
-
-memcached_return_t memcached_push(memcached_st *destination, const memcached_st *source);
-
-
- memcached_instance_st * memcached_server_instance_by_position(const memcached_st *ptr, uint server_key);
-
-
-uint memcached_server_count(const memcached_st *);
-
-
-ulong memcached_query_id(const memcached_st *);
+ulong memcached_query_id(const memcached_st*);
 
 //verbosity.h
-memcached_return_t memcached_verbosity(memcached_st *ptr, uint verbosity);
+memcached_return_t memcached_verbosity(memcached_st* ptr, uint verbosity);
 
 //strerror.h
-char * memcached_strerror(const memcached_st *ptr, memcached_return_t rc);
+char* memcached_strerror(const memcached_st* ptr, memcached_return_t rc);
 
 //version.h
-memcached_return_t memcached_version(memcached_st *ptr);
+memcached_return_t memcached_version(memcached_st* ptr);
 
-
- char * memcached_lib_version();
-
+char* memcached_lib_version();

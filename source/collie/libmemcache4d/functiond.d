@@ -43,362 +43,237 @@ import collie.libmemcache4d.configure;
 
 import std.c.time;
 
-extern (C) :
+extern (C):
 nothrow:
 //alloc.h
 /**
   Memory allocation functions.
 */
 //allocators.h
-memcached_return_t memcached_set_memory_allocators(memcached_st *ptr,
-                                                   memcached_malloc_fn mem_malloc,
-                                                   memcached_free_fn mem_free,
-                                                   memcached_realloc_fn mem_realloc,
-                                                   memcached_calloc_fn mem_calloc,
-                                                   void *context);
+memcached_return_t memcached_set_memory_allocators(memcached_st* ptr,
+    memcached_malloc_fn mem_malloc, memcached_free_fn mem_free,
+    memcached_realloc_fn mem_realloc, memcached_calloc_fn mem_calloc, void* context);
 
+void memcached_get_memory_allocators(const memcached_st* ptr,
+    memcached_malloc_fn* mem_malloc, memcached_free_fn* mem_free,
+    memcached_realloc_fn* mem_realloc, memcached_calloc_fn* mem_calloc);
 
-void memcached_get_memory_allocators(const memcached_st *ptr,
-                                     memcached_malloc_fn *mem_malloc,
-                                     memcached_free_fn *mem_free,
-                                     memcached_realloc_fn *mem_realloc,
-                                     memcached_calloc_fn *mem_calloc);
-
-
-void *memcached_get_memory_allocators_context(const memcached_st *ptr);
+void* memcached_get_memory_allocators_context(const memcached_st* ptr);
 
 //analyze.h
-memcached_analysis_st * memcached_analyze(memcached_st *memc,
-                                         memcached_stat_st *memc_stat,
-                                         memcached_return_t *error);
+memcached_analysis_st* memcached_analyze(memcached_st* memc,
+    memcached_stat_st* memc_stat, memcached_return_t* error);
 
-void memcached_analyze_free(memcached_analysis_st *);
+void memcached_analyze_free(memcached_analysis_st*);
 
 //auto.h
-memcached_return_t memcached_increment(memcached_st *ptr,
-									   const char *key, size_t key_length,
-									   uint offset,
-									   ulong *value);
-	memcached_return_t memcached_decrement(memcached_st *ptr,
-										   const char *key, size_t key_length,
-										   uint offset,
-										   ulong *value);
+memcached_return_t memcached_increment(memcached_st* ptr, const char* key,
+    size_t key_length, uint offset, ulong* value);
+memcached_return_t memcached_decrement(memcached_st* ptr, const char* key,
+    size_t key_length, uint offset, ulong* value);
 
+memcached_return_t memcached_increment_by_key(memcached_st* ptr,
+    const char* group_key, size_t group_key_length, const char* key,
+    size_t key_length, ulong offset, ulong* value);
 
-	memcached_return_t memcached_increment_by_key(memcached_st *ptr,
-												  const char *group_key, size_t group_key_length,
-												  const char *key, size_t key_length,
-												  ulong offset,
-												  ulong *value);
+memcached_return_t memcached_decrement_by_key(memcached_st* ptr,
+    const char* group_key, size_t group_key_length, const char* key,
+    size_t key_length, ulong offset, ulong* value);
 
+memcached_return_t memcached_increment_with_initial(memcached_st* ptr,
+    const char* key, size_t key_length, ulong offset, ulong initial,
+    time_t expiration, ulong* value);
 
-	memcached_return_t memcached_decrement_by_key(memcached_st *ptr,
-												  const char *group_key, size_t group_key_length,
-												  const char *key, size_t key_length,
-												  ulong offset,
-												  ulong *value);
+memcached_return_t memcached_decrement_with_initial(memcached_st* ptr,
+    const char* key, size_t key_length, ulong offset, ulong initial,
+    time_t expiration, ulong* value);
 
+memcached_return_t memcached_increment_with_initial_by_key(memcached_st* ptr,
+    const char* group_key, size_t group_key_length, const char* key,
+    size_t key_length, ulong offset, ulong initial, time_t expiration, ulong* value);
 
-	memcached_return_t memcached_increment_with_initial(memcached_st *ptr,
-														const char *key,
-														size_t key_length,
-														ulong offset,
-														ulong initial,
-														time_t expiration,
-														ulong *value);
+memcached_return_t memcached_decrement_with_initial_by_key(memcached_st* ptr,
+    const char* group_key, size_t group_key_length, const char* key,
+    size_t key_length, ulong offset, ulong initial, time_t expiration, ulong* value);
 
+//behavior.h
+memcached_return_t memcached_behavior_set(memcached_st* ptr,
+    const memcached_behavior_t flag, ulong data);
 
-	memcached_return_t memcached_decrement_with_initial(memcached_st *ptr,
-														const char *key,
-														size_t key_length,
-														ulong offset,
-														ulong initial,
-														time_t expiration,
-														ulong *value);
+ulong memcached_behavior_get(memcached_st* ptr, const memcached_behavior_t flag);
 
+memcached_return_t memcached_behavior_set_distribution(memcached_st* ptr,
+    memcached_server_distribution_t type);
 
-	memcached_return_t memcached_increment_with_initial_by_key(memcached_st *ptr,
-															   const char *group_key,
-															   size_t group_key_length,
-															   const char *key,
-															   size_t key_length,
-															   ulong offset,
-															   ulong initial,
-															   time_t expiration,
-															   ulong *value);
+memcached_server_distribution_t memcached_behavior_get_distribution(memcached_st* ptr);
 
+memcached_return_t memcached_behavior_set_key_hash(memcached_st* ptr, memcached_hash_t type);
 
-	memcached_return_t memcached_decrement_with_initial_by_key(memcached_st *ptr,
-															   const char *group_key,
-															   size_t group_key_length,
-															   const char *key,
-															   size_t key_length,
-															   ulong offset,
-															   ulong initial,
-															   time_t expiration,
-															   ulong *value);
+memcached_hash_t memcached_behavior_get_key_hash(memcached_st* ptr);
 
-	//behavior.h
-	memcached_return_t memcached_behavior_set(memcached_st *ptr, const memcached_behavior_t flag, ulong data);
+memcached_return_t memcached_behavior_set_distribution_hash(memcached_st* ptr, memcached_hash_t type);
 
+memcached_hash_t memcached_behavior_get_distribution_hash(memcached_st* ptr);
 
-	ulong memcached_behavior_get(memcached_st *ptr, const memcached_behavior_t flag);
+char* libmemcached_string_behavior(const memcached_behavior_t flag);
 
+char* libmemcached_string_distribution(const memcached_server_distribution_t flag);
 
-	memcached_return_t memcached_behavior_set_distribution(memcached_st *ptr, memcached_server_distribution_t type);
+memcached_return_t memcached_bucket_set(memcached_st* self,
+    const uint* host_map, const uint* forward_map, const uint buckets, const uint replicas);
 
+//callback.h
+memcached_return_t memcached_callback_set(memcached_st* ptr,
+    const memcached_callback_t flag, const void* data);
 
-	memcached_server_distribution_t memcached_behavior_get_distribution(memcached_st *ptr);
+void* memcached_callback_get(memcached_st* ptr, const memcached_callback_t flag,
+    memcached_return_t* error);
 
+//delete.h
+memcached_return_t memcached_delete(memcached_st* ptr, const char* key,
+    size_t key_length, time_t expiration);
 
-	memcached_return_t memcached_behavior_set_key_hash(memcached_st *ptr, memcached_hash_t type);
+memcached_return_t memcached_delete_by_key(memcached_st* ptr,
+    const char* group_key, size_t group_key_length, const char* key,
+    size_t key_length, time_t expiration);
+//dump.h
+memcached_return_t memcached_dump(memcached_st* ptr,
+    memcached_dump_fn* cfunction, void* context, uint number_of_callbacks);
 
+//error.h
 
-	memcached_hash_t memcached_behavior_get_key_hash(memcached_st *ptr);
+char* memcached_error(const memcached_st*);
 
+char* memcached_last_error_message(const memcached_st*);
 
-	memcached_return_t memcached_behavior_set_distribution_hash(memcached_st *ptr, memcached_hash_t type);
+void memcached_error_print(const memcached_st*);
 
+memcached_return_t memcached_last_error(const memcached_st*);
 
-	memcached_hash_t memcached_behavior_get_distribution_hash(memcached_st *ptr);
+int memcached_last_error_errno(const memcached_st*);
 
+char* memcached_server_error(const memcached_instance_st* ptr);
 
-	char * libmemcached_string_behavior(const memcached_behavior_t flag);
+memcached_return_t memcached_server_error_return(const memcached_instance_st* ptr);
 
+//encoding_key.h
+memcached_return_t memcached_set_encoding_key(memcached_st*, const char* str, size_t length);
 
-	char *libmemcached_string_distribution(const memcached_server_distribution_t flag);
+//exist.h
+memcached_return_t memcached_exist(memcached_st* memc, const char* key, size_t key_length);
 
+memcached_return_t memcached_exist_by_key(memcached_st* memc,
+    const char* group_key, size_t group_key_length, const char* key, size_t key_length);
 
-	memcached_return_t memcached_bucket_set(memcached_st *self,
-											const uint *host_map,
-											const uint *forward_map,
-											const uint buckets,
-											const uint replicas);
+//fetch.h
+memcached_return_t memcached_fetch_execute(memcached_st* ptr,
+    memcached_execute_fn* callback, void* context, uint number_of_callbacks);
 
+//fluash.h
+memcached_return_t memcached_flush(memcached_st* ptr, time_t expiration);
 
-	//callback.h
-	memcached_return_t memcached_callback_set(memcached_st *ptr,
-											  const memcached_callback_t flag,
-											  const void *data);
+//flush_buffers.h
+memcached_return_t memcached_flush_buffers(memcached_st* mem);
 
-	void *memcached_callback_get(memcached_st *ptr,
-								 const memcached_callback_t flag,
-								 memcached_return_t *error);
+//get.h
+char* memcached_get(memcached_st* ptr, const char* key, size_t key_length,
+    size_t* value_length, uint* flags, memcached_return_t* error);
 
-	//delete.h
-	memcached_return_t memcached_delete(memcached_st *ptr, const char *key, size_t key_length,
-										time_t expiration);
+memcached_return_t memcached_mget(memcached_st* ptr, const char** keys,
+    const size_t* key_length, size_t number_of_keys);
 
+char* memcached_get_by_key(memcached_st* ptr, const char* group_key,
+    size_t group_key_length, const char* key, size_t key_length,
+    size_t* value_length, uint* flags, memcached_return_t* error);
 
-	memcached_return_t memcached_delete_by_key(memcached_st *ptr,
-											   const char *group_key, size_t group_key_length,
-											   const char *key, size_t key_length,
-											   time_t expiration);
-	//dump.h
-	memcached_return_t memcached_dump(memcached_st *ptr, memcached_dump_fn * cfunction, void *context, uint number_of_callbacks);
+memcached_return_t memcached_mget_by_key(memcached_st* ptr,
+    const char* group_key, size_t group_key_length, const char** keys,
+    const size_t* key_length, const size_t number_of_keys);
 
-	//error.h
+char* memcached_fetch(memcached_st* ptr, char* key, size_t* key_length,
+    size_t* value_length, uint* flags, memcached_return_t* error);
 
-	 char *memcached_error(const memcached_st *);
+memcached_result_st* memcached_fetch_result(memcached_st* ptr,
+    memcached_result_st* result, memcached_return_t* error);
 
+memcached_return_t memcached_mget_execute(memcached_st* ptr, const char** keys,
+    const size_t* key_length, const size_t number_of_keys,
+    memcached_execute_fn* callback, void* context, const uint number_of_callbacks);
 
-	 char *memcached_last_error_message(const memcached_st *);
+memcached_return_t memcached_mget_execute_by_key(memcached_st* ptr,
+    const char* group_key, size_t group_key_length, const char** keys,
+    const size_t* key_length, size_t number_of_keys,
+    memcached_execute_fn* callback, void* context, const uint number_of_callbacks);
 
+//hash.d
+uint memcached_generate_hash_value(const char* key, size_t key_length,
+    memcached_hash_t hash_algorithm);
 
-	void memcached_error_print(const memcached_st *);
+hashkit_st* memcached_get_hashkit(const memcached_st* ptr);
 
+memcached_return_t memcached_set_hashkit(memcached_st* ptr, hashkit_st* hashk);
 
-	memcached_return_t memcached_last_error(const memcached_st *);
+uint memcached_generate_hash(const memcached_st* ptr, const char* key, size_t key_length);
 
+void memcached_autoeject(memcached_st* ptr);
 
-	int memcached_last_error_errno(const memcached_st *);
+char* libmemcached_string_hash(memcached_hash_t type);
 
+//options.h
+memcached_return_t libmemcached_check_configuration(const char* option_string,
+    size_t length, char* error_buffer, size_t error_buffer_size);
 
-	 char *memcached_server_error(const memcached_instance_st * ptr);
+//parse.h
+memcached_server_list_st memcached_servers_parse(const char* server_strings);
 
+//quit.h
+void memcached_quit(memcached_st* ptr);
 
-	memcached_return_t memcached_server_error_return(const memcached_instance_st * ptr);
+//result.d
+void memcached_result_free(memcached_result_st* result);
 
-	//encoding_key.h
-	 memcached_return_t memcached_set_encoding_key(memcached_st*, const char *str, size_t length);
+void memcached_result_reset(memcached_result_st* ptr);
 
-	 //exist.h
-	 memcached_return_t memcached_exist(memcached_st *memc, const char *key, size_t key_length);
+memcached_result_st* memcached_result_create(const memcached_st* ptr, memcached_result_st* result);
 
+char* memcached_result_key_value(const memcached_result_st* self);
 
-	 memcached_return_t memcached_exist_by_key(memcached_st *memc,
-											   const char *group_key, size_t group_key_length,
-											   const char *key, size_t key_length);
+size_t memcached_result_key_length(const memcached_result_st* self);
 
-	 //fetch.h
-	 memcached_return_t memcached_fetch_execute(memcached_st *ptr,
-												memcached_execute_fn *callback,
-												void *context,
-												uint number_of_callbacks);
+char* memcached_result_value(const memcached_result_st* self);
 
-	//fluash.h
-	 memcached_return_t memcached_flush(memcached_st *ptr, time_t expiration);
+char* memcached_result_take_value(memcached_result_st* self);
 
-	 //flush_buffers.h
-	 memcached_return_t memcached_flush_buffers(memcached_st *mem);
+size_t memcached_result_length(const memcached_result_st* self);
 
-	 //get.h
-	 char *memcached_get(memcached_st *ptr,
-						 const char *key, size_t key_length,
-						 size_t *value_length,
-						 uint *flags,
-						 memcached_return_t *error);
+uint memcached_result_flags(const memcached_result_st* self);
 
+ulong memcached_result_cas(const memcached_result_st* self);
 
-	 memcached_return_t memcached_mget(memcached_st *ptr,
-									   const char *  *keys,
-									   const size_t *key_length,
-									   size_t number_of_keys);
+memcached_return_t memcached_result_set_value(memcached_result_st* ptr,
+    const char* value, size_t length);
 
+void memcached_result_set_flags(memcached_result_st* self, uint flags);
 
-	 char *memcached_get_by_key(memcached_st *ptr,
-								const char *group_key, size_t group_key_length,
-								const char *key, size_t key_length,
-								size_t *value_length,
-								uint *flags,
-								memcached_return_t *error);
+void memcached_result_set_expiration(memcached_result_st* self, time_t expiration);
 
+//touch.h
+memcached_return_t memcached_touch(memcached_st* ptr, const char* key,
+    size_t key_length, time_t expiration);
 
-	 memcached_return_t memcached_mget_by_key(memcached_st *ptr,
-											  const char *group_key,
-											  size_t group_key_length,
-											  const char *  *keys,
-											  const size_t *key_length,
-											  const size_t number_of_keys);
+memcached_return_t memcached_touch_by_key(memcached_st* ptr,
+    const char* group_key, size_t group_key_length, const char* key,
+    size_t key_length, time_t expiration);
 
+version (sasl)
+{
+    void memcached_set_sasl_callbacks(memcached_st* ptr, const sasl_callback_t* callbacks);
 
-	 char *memcached_fetch(memcached_st *ptr,
-						   char *key,
-						   size_t *key_length,
-						   size_t *value_length,
-						   uint *flags,
-						   memcached_return_t *error);
+    memcached_return_t memcached_set_sasl_auth_data(memcached_st* ptr,
+        const char* username, const char* password);
 
+    memcached_return_t memcached_destroy_sasl_auth_data(memcached_st* ptr);
 
-	 memcached_result_st *memcached_fetch_result(memcached_st *ptr,
-												 memcached_result_st *result,
-												 memcached_return_t *error);
+    sasl_callback_t* memcached_get_sasl_callbacks(memcached_st* ptr);
 
-
-	 memcached_return_t memcached_mget_execute(memcached_st *ptr,
-											   const char *  *keys,
-											   const size_t *key_length,
-											   const size_t number_of_keys,
-											   memcached_execute_fn *callback,
-											   void *context,
-											   const uint number_of_callbacks);
-
-
-	 memcached_return_t memcached_mget_execute_by_key(memcached_st *ptr,
-													  const char *group_key,
-													  size_t group_key_length,
-													  const char *  *keys,
-													  const size_t *key_length,
-													  size_t number_of_keys,
-													  memcached_execute_fn *callback,
-													  void *context,
-													  const uint number_of_callbacks);
-
-	 //hash.d
-	 uint memcached_generate_hash_value(const char *key, size_t key_length, memcached_hash_t hash_algorithm);
-
-
-	  hashkit_st *memcached_get_hashkit(const memcached_st *ptr);
-
-
-	 memcached_return_t memcached_set_hashkit(memcached_st *ptr, hashkit_st *hashk);
-
-
-	 uint memcached_generate_hash(const memcached_st *ptr, const char *key, size_t key_length);
-
-
-	 void memcached_autoeject(memcached_st *ptr);
-
-
-	  char * libmemcached_string_hash(memcached_hash_t type);
-
-	//options.h
-	 memcached_return_t libmemcached_check_configuration(const char *option_string, size_t length, char *error_buffer, size_t error_buffer_size);
-
-	 //parse.h
-	 memcached_server_list_st memcached_servers_parse(const char *server_strings);
-
-
-	 //quit.h
-	 void memcached_quit(memcached_st *ptr);
-
-
-	 //result.d
-	 void memcached_result_free(memcached_result_st *result);
-
-
-	 void memcached_result_reset(memcached_result_st *ptr);
-
-
-	 memcached_result_st *memcached_result_create(const memcached_st *ptr,
-												  memcached_result_st *result);
-
-
-	  char *memcached_result_key_value(const memcached_result_st *self);
-
-
-	 size_t memcached_result_key_length(const memcached_result_st *self);
-
-
-	 char * memcached_result_value(const memcached_result_st *self);
-
-
-	 char *memcached_result_take_value(memcached_result_st *self);
-
-
-	 size_t memcached_result_length(const memcached_result_st *self);
-
-
-	 uint memcached_result_flags(const memcached_result_st *self);
-
-
-	 ulong memcached_result_cas(const memcached_result_st *self);
-
-
-	 memcached_return_t memcached_result_set_value(memcached_result_st *ptr, const char *value, size_t length);
-
-
-	 void memcached_result_set_flags(memcached_result_st *self, uint flags);
-
-
-	 void memcached_result_set_expiration(memcached_result_st *self, time_t expiration);
-
-	
-	 //touch.h
-	 memcached_return_t memcached_touch(memcached_st *ptr,
-										const char *key, size_t key_length,
-										time_t expiration);
-
-
-	 memcached_return_t memcached_touch_by_key(memcached_st *ptr,
-											   const char *group_key, size_t group_key_length,
-											   const char *key, size_t key_length,
-											   time_t expiration);
-
-	 version (sasl) {
-		 void memcached_set_sasl_callbacks(memcached_st *ptr,
-										   const sasl_callback_t *callbacks);
-
-
-		 memcached_return_t  memcached_set_sasl_auth_data(memcached_st *ptr,
-														  const char *username,
-														  const char *password);
-
-
-		 memcached_return_t memcached_destroy_sasl_auth_data(memcached_st *ptr);
-
-
-
-		 sasl_callback_t *memcached_get_sasl_callbacks(memcached_st *ptr);
-
-	 } 
+}

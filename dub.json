@@ -1,9 +1,10 @@
 {
     "name": "collie-memcachde4d",
     "description": "memcached extern(C) client for D",
+	"targetType": "library",
     "dependencies": {
     },
-    	"libs-posix": [
+    "libs-posix": [
 		"libmemcached"
 	]
 }
