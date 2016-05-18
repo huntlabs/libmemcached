@@ -2,8 +2,8 @@ module collie.libmemcache4d.memcache;
 public import collie.libmemcache4d.memcached;
 import std.string;
 import std.array;
-import std.c.string;
-import std.c.time;
+import core.stdc.string;
+import core.stdc.time;
 import std.conv;
 
 string fromCString(const char* cstring)

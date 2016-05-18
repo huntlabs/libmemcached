@@ -40,7 +40,7 @@ import collie.libmemcache4d.structd;
 import collie.libmemcache4d.types;
 import collie.libmemcache4d.configure;
 
-import std.c.time;
+import core.stdc.time;
 
 extern (C):
 nothrow:

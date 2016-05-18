@@ -2,8 +2,8 @@ module collie.libmemcache4d.structd;
 
 import collie.libmemcache4d.types;
 import collie.libmemcache4d.configure;
-import std.c.time;
-import std.c.linux.linux;
+import core.stdc.time;
+import core.sys.posix.pthread;
 public import collie.libmemcache4d.hashkit_type;
 
 extern (C):
