@@ -1,5 +1,5 @@
 {
-    "name": "libmemcached4d",
+    "name": "libmemcached",
     "description": "memcached extern(C) client for D",
     "homepage": "http://collied.org/" ,
     "copyright": "Copyright © 2016, putao.com",
