@@ -6,6 +6,7 @@ import core.stdc.string;
 import core.stdc.time;
 import std.conv;
 
+pragma(inline,true)
 string fromCString(const char* cstring)
 {
     return cast(string)(fromStringz(cstring));
@@ -49,12 +50,12 @@ public:
     /**
 	* Get the internal memcached_st *
 	*/
-    /*
-	const memcached_st * getImpl() 
-	{
-		return memc_;
-	}
-*/
+    
+    memcached_st * getImpl() 
+    {
+            return memc_;
+    }
+
     /**
 	* Return an error string for the given return structure.
 	*
@@ -145,20 +146,15 @@ public:
 	* @param[in] server_name name of the server to remove
 	* @param[in] port port number of server to remove
 	* @return true on success; false otherwise
-
-	bool removeServer(const std::string &server_name, in_port_t port)
+    */
+    /*
+	bool removeServer(const string server_name, in_port_t port)
 	{
-    std::string tmp_str;
-    std::ostringstream strstm;
-		tmp_str.append(",");
-		tmp_str.append(server_name);
-		tmp_str.append(":");
-		strstm << port;
-		tmp_str.append(strstm.str());
+		string str = "," ~ server_name ~":" ~ to!string(port);
 
-		//memcached_return_t rc= memcached_server_remove(server);
+		memcached_return_t rc= memcached_server_remove(toStringz(str));
 
-		return false;
+		return  memcached_success(memcached_return_t);
 	}
 	*/
     /**
@@ -217,7 +213,7 @@ public:
 	*                     this vector
 	* @return true on success; false otherwise
 	*/
-    T get(T = string)(string key)
+    T get(T = string)(string key, lazy T v= T.init)
     {
         import std.c.stdlib;
 
@@ -231,9 +227,13 @@ public:
         if (value != null)
         {
             ret_val = value[0 .. value_length].dup;
+            return to!T(ret_val);
         }
-
-        return to!T(ret_val);
+        else
+        {
+            return v;
+        }
+        
     }
 
     /**
@@ -248,7 +248,7 @@ public:
 	*                     this vector
 	* @return true on success; false otherwise
 	*/
-    T getByKey(T = string)(string master_key, string key)
+    T getByKey(T = string)(string master_key, string key, lazy T v= T.init)
     {
         import std.c.stdlib;
 
@@ -265,8 +265,13 @@ public:
 
             ret_val = value[0 .. value_length].dup;
             free(value);
+            return to!T(ret_val);
         }
-        return to!T(ret_val);
+        else
+        {
+            return v;
+        }
+        
     }
 
     /**
