@@ -1,6 +1,7 @@
 import std.stdio;
-import collie.libmemcache4d.memcache;
 import std.string;
+
+import memcache;
 
 void main() {
 	Memcache mem = new Memcache("10.1.11.31",11211);
