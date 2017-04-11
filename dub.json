@@ -9,6 +9,6 @@
     "dependencies": {
     },
     "libs-posix": [
-		"libmemcached"
+	"memcached"
 	]
 }
