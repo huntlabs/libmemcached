@@ -2,7 +2,7 @@
 
 It's a wrapper library for Memcached with D.
 
-##Dependencies
+## Dependencies
 
 - Debian/Ubuntu : apt-get install libmemcached-dev
 
