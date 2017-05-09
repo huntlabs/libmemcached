@@ -4,3 +4,4 @@
 /.dub
 /dub.selections.json
 /*.suo
+/*.a

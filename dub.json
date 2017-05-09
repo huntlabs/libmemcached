@@ -1,14 +1,15 @@
 {
-    "name": "libmemcached",
-    "description": "memcached extern(C) client for D",
-    "homepage": "http://collied.org/" ,
-    "copyright": "Copyright © 2016, putao.com",
-    "authors": ["putao.com Dlang team."],
-    "license": "BSD" ,
-    "targetType": "library",
-    "dependencies": {
-    },
-    "libs-posix": [
-		"libmemcached"
-	]
+  "name": "memcached4d",
+  "description": "A memcached wrapper with D.",
+  "copyright": "Copyright © 2016-2017, Shanghai Putao Technology Co., Ltd.",
+  "authors": [
+    "donglei",
+    "BitWorld"
+  ],
+  "license": "BSD 3-clause",
+  "targetType": "library",
+  "dependencies": {},
+  "libs-posix": [
+    "libmemcached"
+  ]
 }
