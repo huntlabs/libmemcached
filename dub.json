@@ -1,5 +1,5 @@
 {
-  "name": "memcached4d",
+  "name": "libmemcached",
   "description": "A memcached wrapper with D.",
   "copyright": "Copyright © 2016-2017, Shanghai Putao Technology Co., Ltd.",
   "authors": [
