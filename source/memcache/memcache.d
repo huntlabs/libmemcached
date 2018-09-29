@@ -216,7 +216,7 @@ public:
 	*/
     T get(T = string)(string key, lazy T v= T.init)
     {
-        import std.c.stdlib;
+        import core.stdc.stdlib;
 
         uint flags = 0;
         memcached_return_t rc;
@@ -251,7 +251,7 @@ public:
 	*/
     T getByKey(T = string)(string master_key, string key, lazy T v= T.init)
     {
-        import std.c.stdlib;
+        import core.stdc.stdlib;
 
         uint flags = 0;
         memcached_return_t rc;
