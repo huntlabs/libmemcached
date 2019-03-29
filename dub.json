@@ -1,13 +1,11 @@
 {
   "name": "libmemcached",
   "description": "A memcached wrapper with D.",
-  "copyright": "Copyright © 2016-2017, Shanghai Putao Technology Co., Ltd.",
-  "authors": [
-    "donglei",
-    "BitWorld"
-  ],
+  "copyright": "Copyright (C) 2015-2019, HuntLabs",
+	"homepage": "https://www.huntlabs.net",
   "license": "BSD 3-clause",
   "targetType": "library",
+  "versions": ["WITH_HUNT_MEMCACHE"],
   "dependencies": {},
   "lib": [
     "memcached"
